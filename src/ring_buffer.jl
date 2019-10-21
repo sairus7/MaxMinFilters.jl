@@ -142,9 +142,9 @@ Base.size(buf::RingBuffer) = (buf.contentLen,)
 Base.convert(::Type{Array}, buf::RingBuffer{T}) where T = T[x for x in buf]
 Base.isempty(buf::RingBuffer) = isempty(buf.buffer)
 
-capacity(buf::RingBuffer) = buf.len # полная вместимость
+capacity(buf::RingBuffer) = buf.len # full capacity
 isfull(buf::RingBuffer) = buf.contentLen == buf.len
-# bounds(buf::RingBuffer) = (buf.first, buf.last) # индексы границ
+# bounds(buf::RingBuffer) = (buf.first, buf.last) # bounds indexes
 
 function Base.empty!(buf::RingBuffer)
     buf.contentLen = buf.last = 0
