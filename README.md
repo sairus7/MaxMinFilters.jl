@@ -18,11 +18,11 @@ There are two other packages with similar functionality for moving window maximu
 - [RollingFunctions.jl](https://github.com/JeffreySarnoff/RollingFunctions.jl)
 - [Indicators.jl](https://github.com/dysonance/Indicators.jl)
 
-Compared to these packages, `MaxMinFilters` provides significant speed-up:
+Compared to these packages, [MaxMinFilters](https://github.com/sairus7/MaxMinFilters.jl) provides significant speed-up:
 
 ![plot](https://user-images.githubusercontent.com/20798349/67226660-26f12b80-f43e-11e9-8a3a-480e22a86462.png)
 
-Also `MaxMinFilters` provides stateful filter objects, allowing you to process a signal of indefinite length in RAM-friendly chunks, similar to [DSP.jl](https://juliadsp.github.io/DSP.jl/stable/filters/#stateful-filter-objects-1).
+Also [MaxMinFilters](https://github.com/sairus7/MaxMinFilters.jl) provides stateful filter objects, allowing you to process a signal of indefinite length in RAM-friendly chunks, similar to [DSP.jl](https://juliadsp.github.io/DSP.jl/stable/filters/#stateful-filter-objects-1).
 
 # Examples
 ```julia
