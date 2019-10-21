@@ -20,14 +20,14 @@ include("movmaxmin_stateful.jl")
 
 end # module
 
-# how should delays be fixed, add a kw to mov functinos?
 
+# how should delays be fixed, add a kw to mov functinos?
 
 # naming of streaming algorithms: should all moving functions start with `mov`?
 # naming of stateful functions - should they be named as filters in DSP terminology?
 
 # relation to other packages, such as DSP, rolling functions, indicators -
-# how shopuld we make a concise libraries?
+# how should we make a concise libraries?
 
 # what notation is better for stateful filters: run! / filter! / movmaxmin! ?
 
