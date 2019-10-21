@@ -389,8 +389,8 @@ end
 function run!(xenvelope::AbstractArray{T},
               state::EnvelopeFilter{T},
               x::AbstractArray{T}) where T
-    run!(state.rangefilter, xenvelope, x)
-    run!(state.minfilter, xenvelope, xenvelope)
+    run!(xenvelope, state.rangefilter, x)
+    run!(xenvelope, state.minfilter, xenvelope)
 end
 filt(state::EnvelopeFilter, x) = run(state, x)
 filt!(xenvelope, state::EnvelopeFilter, x) = run!(xenvelope, state, x)
