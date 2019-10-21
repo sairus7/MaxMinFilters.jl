@@ -1,0 +1,7 @@
+name = "MaxMinFilters"
+uuid = "be03bc56-bb7c-4dbf-b252-c57e9365e4bb"
+authors = ["Victor G. Gumennyy <20798349+sairus7@users.noreply.github.com>"]
+version = "0.1.0"
+
+[deps]
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
