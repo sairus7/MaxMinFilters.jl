@@ -6,4 +6,4 @@ Julia implementation of Daniel Lemire's Streaming Maximum-Minimum Filter:
 http://arxiv.org/abs/cs.DS/0610046
 
 
-# Implemented both as functions over a moving window, and stateful filter objects
+Implemented both as functions over a moving window, and stateful filter objects
