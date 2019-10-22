@@ -2,11 +2,11 @@
 
 Julia implementation of Daniel Lemire's Streaming Maximum-Minimum Filter:
 
-_"Streaming Maximum-Minimum Filter Using No More than Three Comparisons per Element"_
+_Daniel Lemire, Streaming Maximum-Minimum Filter Using No More than Three Comparisons per Element. Nordic Journal of Computing, 13 (4), pages 328-339, 2006._
 http://arxiv.org/abs/cs.DS/0610046
 
-Implemented both as functions over a moving window, and stateful filter objects. Available filters:
-minimum, maximum, minimum+maximum, range, envelope 
+Implemented both as functions over a moving window, and stateful filter objects. 
+Available filters: minimum, maximum, minimum+maximum, range, envelope 
 
 # Installation
 ```julia
@@ -14,17 +14,19 @@ minimum, maximum, minimum+maximum, range, envelope
 ```
 
 # Comparison with other packages
-There are two other packages with similar functionality for moving window maximum/minimum functions:
+There are three other Julia packages with overlapping functionality for moving window maximum/minimum functions:
 - [RollingFunctions.jl](https://github.com/JeffreySarnoff/RollingFunctions.jl)
 - [Indicators.jl](https://github.com/dysonance/Indicators.jl)
+- [ImageFiltering.jl](https://github.com/JuliaImages/ImageFiltering.jl)
 
-Compared to these packages, [MaxMinFilters](https://github.com/sairus7/MaxMinFilters.jl) provides significant speed-up:
+Compared to these packages, [MaxMinFilters.jl](https://github.com/sairus7/MaxMinFilters.jl) provides significant speed-up, and its complexity does not depend on window length (benchmark available at [examples/benchmark.jl](https://github.com/sairus7/MaxMinFilters.jl/blob/master/examples/benchmark.jl)):
 
-![plot](https://user-images.githubusercontent.com/20798349/67226660-26f12b80-f43e-11e9-8a3a-480e22a86462.png)
+![plot](https://user-images.githubusercontent.com/20798349/67251317-60925880-f477-11e9-895c-dbb6eda2bd06.png)
 
-Also [MaxMinFilters](https://github.com/sairus7/MaxMinFilters.jl) provides stateful filter objects, allowing you to process a signal of indefinite length in RAM-friendly chunks, similar to [DSP.jl](https://juliadsp.github.io/DSP.jl/stable/filters/#stateful-filter-objects-1).
+Also [MaxMinFilters.jl](https://github.com/sairus7/MaxMinFilters.jl) provides stateful filter objects, allowing you to process a signal of indefinite length in RAM-friendly chunks, similar to [DSP.jl](https://juliadsp.github.io/DSP.jl/stable/filters/#stateful-filter-objects-1).
 
 # Examples
+[examples/example.jl](https://github.com/sairus7/MaxMinFilters.jl/blob/master/examples/example.jl):
 ```julia
 using Plots
 using MaxMinFilters
