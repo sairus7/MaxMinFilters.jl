@@ -8,12 +8,12 @@ http://arxiv.org/abs/cs.DS/0610046
 Implemented both as functions over a moving window, and stateful filter objects. 
 Available filters: minimum, maximum, minimum+maximum, range, envelope 
 
-# Installation
+## Installation
 ```julia
 ]add https://github.com/sairus7/MaxMinFilters.jl.git
 ```
 
-# Comparison with other packages
+## Comparison with other packages
 There are three other Julia packages with overlapping functionality for moving window maximum/minimum functions:
 - [RollingFunctions.jl](https://github.com/JeffreySarnoff/RollingFunctions.jl)
 - [Indicators.jl](https://github.com/dysonance/Indicators.jl)
@@ -25,7 +25,7 @@ Compared to these packages, [MaxMinFilters.jl](https://github.com/sairus7/MaxMin
 
 Also [MaxMinFilters.jl](https://github.com/sairus7/MaxMinFilters.jl) provides stateful filter objects, allowing you to process a signal of indefinite length in RAM-friendly chunks, similar to [DSP.jl](https://juliadsp.github.io/DSP.jl/stable/filters/#stateful-filter-objects-1).
 
-# Examples
+## Examples
 [examples/example.jl](https://github.com/sairus7/MaxMinFilters.jl/blob/master/examples/example.jl):
 ```julia
 using Plots
