@@ -55,8 +55,8 @@ plot!(xrange, label = "range")
 ```julia
 envelope = movenvelope(x, w)
 plot(x, label = "x")
-plot!(envelope[w:end], label = "envelope")
+plot!(envelope[w-1:end], label = "envelope")
 
 #png("plot2.png")
 ```
-![plot2](https://user-images.githubusercontent.com/20798349/67228184-71c07280-f441-11e9-996e-9f3cde248bd8.png)
+![plot2](https://user-images.githubusercontent.com/20798349/67546564-63a27880-f705-11e9-8c94-69cda507b591.png)

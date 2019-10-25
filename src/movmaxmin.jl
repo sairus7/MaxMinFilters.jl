@@ -1,6 +1,6 @@
 const Evt{T} = NamedTuple{(:pos, :val),Tuple{Int,T}}
 Evt(pos::Int, val::T) where T = (pos = pos, val = val)
-
+1
 """
 `xmax, xmin = movmaxmin(x, w)`
 
@@ -24,18 +24,18 @@ function _movmaxmin!(xmax::AbstractArray{T}, xmin::AbstractArray{T}, x::Abstract
     @inbounds for i=2:Len
         xi_1 = xi
         xi = x[i]
-        xmax[i-1] = U_capacity > 0 ? U_buf[U_first].val : xi_1 ### x[get_front[U]]
-        xmin[i-1] = L_capacity > 0 ? L_buf[L_first].val : xi_1 ### x[get_front[L]]
+        xmax[i-1] = ifelse(U_capacity > 0, U_buf[U_first].val, xi_1) ### x[get_front[U]]
+        xmin[i-1] = ifelse(L_capacity > 0, L_buf[L_first].val, xi_1) ### x[get_front[L]]
 
         if xi > xi_1
             ### L = push_back[L, i-1];
-            L_last = L_last < w ? L_last+1 : 1
+            L_last = ifelse(L_last < w, L_last+1, 1)
             L_buf[L_last] = Evt(i-1, xi_1)
             L_capacity += 1
             ###
             if i == w + L_buf[L_first].pos
                 ### L = pop_front[L];
-                L_first = L_first < w ? L_first+1 : 1
+                L_first = ifelse(L_first < w, L_first+1, 1)
                 L_capacity -= 1
                 ###
             end
@@ -43,26 +43,26 @@ function _movmaxmin!(xmax::AbstractArray{T}, xmin::AbstractArray{T}, x::Abstract
                 if xi <= U_buf[U_last].val
                     if i == w + U_buf[U_first].pos
                         ### U = pop_front[U];
-                        U_first = U_first < w ? U_first+1 : 1
+                        U_first = ifelse(U_first < w, U_first+1, 1)
                         U_capacity -= 1
                         ###
                     end
                     break
                 end
                 ### U = pop_back[U];
-                U_last = U_last > 1 ? U_last-1 : w
+                U_last = ifelse(U_last > 1, U_last-1, w)
                 U_capacity -= 1
                 ###
             end
         else
             ### U = push_back[U, i-1];
-            U_last = U_last < w ? U_last+1 : 1
+            U_last = ifelse(U_last < w, U_last+1, 1)
             U_buf[U_last] = Evt(i-1, xi_1)
             U_capacity += 1
             ###
             if i == w + U_buf[U_first].pos
                 ### U = pop_front[U];
-                U_first = U_first < w ? U_first+1 : 1
+                U_first = ifelse(U_first < w, U_first+1, 1)
                 U_capacity -= 1
                 ###
             end
@@ -70,21 +70,21 @@ function _movmaxmin!(xmax::AbstractArray{T}, xmin::AbstractArray{T}, x::Abstract
                 if xi >= L_buf[L_last].val
                     if i == w + L_buf[L_first].pos
                         ### L = pop_front[L];
-                        L_first = L_first < w ? L_first+1 : 1
+                        L_first = ifelse(L_first < w, L_first+1, 1)
                         L_capacity -= 1
                         ###
                     end
                     break
                 end
                 ### L = pop_back[L];
-                L_last = L_last > 1 ? L_last-1 : w
+                L_last = ifelse(L_last > 1, L_last-1, w)
                 L_capacity -= 1
                 ###
             end
         end
     end
-    xmax[Len] = U_capacity > 0 ? U_buf[U_first].val : x[Len] ### x[get_front[U]]
-    xmin[Len] = L_capacity > 0 ? L_buf[L_first].val : x[Len] ### x[get_front[L]]
+    xmax[Len] = ifelse(U_capacity > 0, U_buf[U_first].val, x[Len]) ### x[get_front[U]]
+    xmin[Len] = ifelse(L_capacity > 0, L_buf[L_first].val, x[Len]) ### x[get_front[L]]
 
     xmin, xmax
 end
@@ -97,8 +97,8 @@ function movmaxmin!(xmax::AbstractArray{T}, xmin::AbstractArray{T}, x::AbstractA
     @inbounds for i=2:Len
         xi_1 = xi
         xi = x[i]
-        xmax[i-1] = length(U_buf) > 0 ? first(U_buf).val : xi_1 ### x[get_front[U]]
-        xmin[i-1] = length(L_buf) > 0 ? first(L_buf).val : xi_1 ### x[get_front[L]]
+        xmax[i-1] = ifelse(length(U_buf) > 0, first(U_buf).val, xi_1) ### x[get_front[U]]
+        xmin[i-1] = ifelse(length(L_buf) > 0, first(L_buf).val, xi_1) ### x[get_front[L]]
 
         if xi > xi_1
             push!(L_buf, Evt(i-1, xi_1))
@@ -131,8 +131,8 @@ function movmaxmin!(xmax::AbstractArray{T}, xmin::AbstractArray{T}, x::AbstractA
         end
     end
 
-    xmax[Len] = length(U_buf) > 0 ? first(U_buf).val : x[Len]
-    xmin[Len] = length(L_buf) > 0 ? first(L_buf).val : x[Len]
+    xmax[Len] = ifelse(length(U_buf) > 0, first(U_buf).val, x[Len])
+    xmin[Len] = ifelse(length(L_buf) > 0, first(L_buf).val, x[Len])
 
     xmax, xmin
 end
@@ -151,8 +151,8 @@ function movrange!(xrange::AbstractArray{T}, x::AbstractArray{T}, w::Int) where 
     @inbounds for i=2:Len
         xi_1 = xi
         xi = x[i]
-        mx = length(U_buf) > 0 ? first(U_buf).val : xi_1 ### x[get_front[U]]
-        mn = length(L_buf) > 0 ? first(L_buf).val : xi_1 ### x[get_front[L]]
+        mx = ifelse(length(U_buf) > 0, first(U_buf).val, xi_1) ### x[get_front[U]]
+        mn = ifelse(length(L_buf) > 0, first(L_buf).val, xi_1) ### x[get_front[L]]
         xrange[i-1] = mx - mn
 
         if xi > xi_1
@@ -186,8 +186,8 @@ function movrange!(xrange::AbstractArray{T}, x::AbstractArray{T}, w::Int) where 
         end
     end
 
-    mx = length(U_buf) > 0 ? first(U_buf).val : x[Len]
-    mn = length(L_buf) > 0 ? first(L_buf).val : x[Len]
+    mx = ifelse(length(U_buf) > 0, first(U_buf).val, x[Len])
+    mn = ifelse(length(L_buf) > 0, first(L_buf).val, x[Len])
     xrange[Len] = mx - mn
 
     xrange
@@ -206,7 +206,7 @@ function movmax!(xmax::AbstractArray{T}, x::AbstractArray{T}, w::Int) where T
     @inbounds for i=2:Len
         xi_1 = xi
         xi = x[i]
-        xmax[i-1] = length(U_buf) > 0 ? first(U_buf).val : xi_1 ### x[get_front[U]]
+        xmax[i-1] = ifelse(length(U_buf) > 0, first(U_buf).val, xi_1) ### x[get_front[U]]
         ### ...
         if xi > xi_1
             ### ...
@@ -227,7 +227,7 @@ function movmax!(xmax::AbstractArray{T}, x::AbstractArray{T}, w::Int) where T
             ### ...
         end
     end
-    xmax[Len] = length(U_buf) > 0 ? first(U_buf).val : x[Len]
+    xmax[Len] = ifelse(length(U_buf) > 0, first(U_buf).val, x[Len])
 
     xmax
 end
@@ -246,7 +246,7 @@ function movmin!(xmin::AbstractArray{T}, x::AbstractArray{T}, w::Int) where T
         xi_1 = xi
         xi = x[i]
         # ...
-        xmin[i-1] = length(L_buf) > 0 ? first(L_buf).val : xi_1 ### x[get_front[L]]
+        xmin[i-1] = ifelse(length(L_buf) > 0, first(L_buf).val, xi_1) ### x[get_front[L]]
 
         if xi > xi_1
             push!(L_buf, Evt(i-1, xi_1))
@@ -267,7 +267,7 @@ function movmin!(xmin::AbstractArray{T}, x::AbstractArray{T}, w::Int) where T
             end
         end
     end
-    xmin[Len] = length(L_buf) > 0 ? first(L_buf).val : x[Len]
+    xmin[Len] = ifelse(length(L_buf) > 0, first(L_buf).val, x[Len])
 
     xmin
 end
@@ -280,9 +280,11 @@ Envelope is defined as consecutive `movrange` of window `w1` (1-d dilation)
 and `movmin` of window `w2` (1-d erosion). By default `w2 = w1`.
 Filter delay = `(w1 + w2) ÷ 2`
 """
-movenvelope(x::AbstractArray{T}, w) where T = movenvelope!(similar(x), x, w)
-function movenvelope!(xenvelope::AbstractArray{T}, x::AbstractArray{T}, w1::Int, w2::Int = w1) where T
+movenvelope(x::AbstractArray{T}, w1, w2 = w1 - 1) where T = movenvelope!(similar(x), x, w1, w2)
+function movenvelope!(xenvelope::AbstractArray{T}, x::AbstractArray{T}, w1::Int, w2::Int = w1 - 1) where T
     movrange!(xenvelope, x, w1)
-    movmin!(xenvelope, xenvelope, w2)
+    if (w2 > 0)
+        movmin!(xenvelope, xenvelope, w2)
+    end
     xenvelope
 end

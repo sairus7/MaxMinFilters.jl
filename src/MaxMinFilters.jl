@@ -10,7 +10,7 @@ export movmaxmin, movmaxmin!,
     movmin, movmin!,
     movrange, movrange!,
     movenvelope, movenvelope!,
-    
+
     MaxMinFilter, RangeFilter, MaxFilter, MinFilter, EnvelopeFilter,
     run, run!, filt, filt!, reset!, delay
 

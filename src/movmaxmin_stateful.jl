@@ -78,8 +78,8 @@ function run!(xmax::AbstractArray{T}, xmin::AbstractArray{T}, # output
                 pop!(L_buf)
             end
         end
-        xmax[i] = length(U_buf) > 0 ? first(U_buf).val : xi ### x[get_front[U]]
-        xmin[i] = length(L_buf) > 0 ? first(L_buf).val : xi ### x[get_front[L]]
+        xmax[i] = ifelse(length(U_buf) > 0, first(U_buf).val, xi) ### x[get_front[U]]
+        xmin[i] = ifelse(length(L_buf) > 0, first(L_buf).val, xi) ### x[get_front[L]]
         x0 = xi
     end
 
@@ -177,8 +177,8 @@ function run!(xrange::AbstractArray{T}, # output
                 pop!(L_buf)
             end
         end
-        xmax = length(U_buf) > 0 ? first(U_buf).val : xi ### x[get_front[U]]
-        xmin = length(L_buf) > 0 ? first(L_buf).val : xi ### x[get_front[L]]
+        xmax = ifelse(length(U_buf) > 0, first(U_buf).val, xi) ### x[get_front[U]]
+        xmin = ifelse(length(L_buf) > 0, first(L_buf).val, xi) ### x[get_front[L]]
         xrange[i] = xmax - xmin
         x0 = xi
     end
@@ -262,7 +262,7 @@ function run!(xmax::AbstractArray{T}, # output
             end
             ### ...
         end
-        xmax[i] = length(U_buf) > 0 ? first(U_buf).val : xi ### x[get_front[U]]
+        xmax[i] = ifelse(length(U_buf) > 0, first(U_buf).val, xi) ### x[get_front[U]]
         x0 = xi
     end
 
@@ -342,7 +342,7 @@ function run!(xmin::AbstractArray{T}, # output
                 pop!(L_buf)
             end
         end
-        xmin[i] = length(L_buf) > 0 ? first(L_buf).val : xi ### x[get_front[U]]
+        xmin[i] = ifelse(length(L_buf) > 0, first(L_buf).val, xi) ### x[get_front[U]]
         x0 = xi
     end
 
@@ -371,7 +371,7 @@ Filter delay = `(w1 + w2) ÷ 2`
 mutable struct EnvelopeFilter{T}
     rangefilter::RangeFilter{T}
     minfilter::MinFilter{T}
-    EnvelopeFilter{T}(w1::Int, w2::Int = w1) where T =
+    EnvelopeFilter{T}(w1::Int, w2::Int = w1-1) where T =
         new{T}(RangeFilter{T}(w1), MinFilter{T}(w2))
 end
 
@@ -390,7 +390,9 @@ function run!(xenvelope::AbstractArray{T},
               state::EnvelopeFilter{T},
               x::AbstractArray{T}) where T
     run!(xenvelope, state.rangefilter, x)
-    run!(xenvelope, state.minfilter, xenvelope)
+    if (state.minfilter.window > 0)
+        run!(xenvelope, state.minfilter, xenvelope)
+    end
 end
 filt(state::EnvelopeFilter, x) = run(state, x)
 filt!(xenvelope, state::EnvelopeFilter, x) = run!(xenvelope, state, x)

@@ -23,6 +23,6 @@ plot!(xrange, label = "range")
 
 envelope = movenvelope(x, w)
 plot(x, label = "x")
-plot!(envelope[w:end], label = "envelope")
+plot!(envelope[w-1:end], label = "envelope") # with delay fixed
 
 #png("plot2.png")

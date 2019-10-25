@@ -26,11 +26,7 @@ end
     #idx = mod1(buf.first + i - 1, buf.len) # idx = (buf.first + i - 2) % buf.len + 1
     idx = buf.first + i - 1
     # idx > buf.len ? idx - buf.len : idx
-    if idx > buf.len
-        idx - buf.len
-    else
-        idx
-    end
+    ifelse(idx > buf.len, idx - buf.len, idx)
 end
 
 @inline Base.@propagate_inbounds function Base.getindex(buf::RingBuffer, i::Int)
@@ -71,7 +67,7 @@ end
     i = buf.first
     if buf.contentLen > 0
         buf.contentLen -= 1
-        buf.first = (buf.first == buf.len ? 1 : buf.first + 1)
+        buf.first = ifelse(buf.first == buf.len, 1, buf.first + 1)
     else
         throw(ArgumentError("array must be non-empty"))
     end
