@@ -21,7 +21,7 @@ There are three other Julia packages with overlapping functionality for moving w
 
 Compared to these packages, [MaxMinFilters.jl](https://github.com/sairus7/MaxMinFilters.jl) provides significant speed-up, and its complexity does not depend on window length (benchmark available at [examples/benchmark.jl](https://github.com/sairus7/MaxMinFilters.jl/blob/master/examples/benchmark.jl)):
 
-![plot](https://user-images.githubusercontent.com/20798349/67251317-60925880-f477-11e9-895c-dbb6eda2bd06.png)
+![plot](https://user-images.githubusercontent.com/20798349/68367252-4f6b6c00-0146-11ea-9978-00e7191aa85d.png)
 
 Also [MaxMinFilters.jl](https://github.com/sairus7/MaxMinFilters.jl) provides stateful filter objects, allowing you to process a signal of indefinite length in RAM-friendly chunks, similar to [DSP.jl](https://juliadsp.github.io/DSP.jl/stable/filters/#stateful-filter-objects-1).
 
