@@ -28,7 +28,7 @@ for i in eachindex(windows)
     t = @benchmark ImageFiltering.mapwindow($extrema, $y, $w) samples=3
     t_img[i] = median(t).time / 10^6
 
-    t = @benchmark RollingFunctions.runmax($y, $w) samples=3
+    t = @benchmark RollingFunctions.rollmax($y, $w) samples=3
     t_rol[i] = median(t).time / 10^6
 
     t = @benchmark Indicators.runmax($y, n = $w, cumulative = $false) samples=3
@@ -38,7 +38,7 @@ end
 ctg = repeat(["1 - MaxMinFilters . movmax",
               "2 - MaxMinFilters . movmaxmin",
               "3 - ImageFiltering . mapwindow extrema",
-              "4 - RollingFunctions . runmax",
+              "4 - RollingFunctions . rollmax",
               "5 - Indicators . runmax",
               ], inner = length(windows))
 
