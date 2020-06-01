@@ -10,7 +10,7 @@ Available filters: minimum, maximum, minimum+maximum, range, envelope
 
 ## Installation
 ```julia
-]add https://github.com/sairus7/MaxMinFilters.jl.git
+]add MaxMinFilters
 ```
 
 ## Comparison with other packages
