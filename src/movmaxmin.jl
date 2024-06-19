@@ -281,7 +281,7 @@ and `movmin` of window `w2` (1-d erosion). By default `w2 = w1`.
 Filter delay = `(w1 + w2) ÷ 2`
 """
 movenvelope(x::AbstractArray{T}, w1, w2 = w1 - 1) where T = movenvelope!(similar(x), x, w1, w2)
-function movenvelope!(xenvelope::AbstractArray{T}, x::AbstractArray{T}, w1::Int, w2::Int = w1 - 1) where T
+function movenvelope!(xenvelope::AbstractArray{T}, x::AbstractArray{T}, w1::Int, w2::Int = w1) where T
     movrange!(xenvelope, x, w1)
     if (w2 > 0)
         movmin!(xenvelope, xenvelope, w2)
