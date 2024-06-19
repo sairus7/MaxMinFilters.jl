@@ -1,7 +1,7 @@
 name = "MaxMinFilters"
 uuid = "be03bc56-bb7c-4dbf-b252-c57e9365e4bb"
 authors = ["Victor G. Gumennyy <20798349+sairus7@users.noreply.github.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [compat]
 julia = "1"
